@@ -57,7 +57,7 @@ IF (CUDA_FOUND)
 
     MESSAGE(STATUS "Building shared library with GPU support")
 
-    CUDA_ADD_LIBRARY(warpctc SHARED src/ctc_entrypoint.cu src/reduce.cu)
+    CUDA_ADD_LIBRARY(warpctc STATIC src/ctc_entrypoint.cu src/reduce.cu)
     IF (!Torch_FOUND) 
         TARGET_LINK_LIBRARIES(warpctc ${CUDA_curand_LIBRARY})
     ENDIF()
@@ -105,7 +105,7 @@ ELSE()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2")
     ENDIF()
 
-    ADD_LIBRARY(warpctc SHARED src/ctc_entrypoint.cpp)
+    ADD_LIBRARY(warpctc STATIC src/ctc_entrypoint.cpp)
 
     add_executable(test_cpu tests/test_cpu.cpp )
     TARGET_LINK_LIBRARIES(test_cpu warpctc)
